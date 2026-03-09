@@ -1,0 +1,35 @@
+{
+  "name": "mcp-osi",
+  "version": "0.1.0",
+  "description": "MCP server for generating and validating Open Semantic Interchange (OSI) schemas",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "mcp-osi": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc && cp -r src/schema dist/schema",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "osi",
+    "semantic-model",
+    "schema",
+    "validation"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "ajv": "^8.17.1",
+    "yaml": "^2.7.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
