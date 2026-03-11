@@ -3,4 +3,5 @@ export interface ValidationError {
     path: string;
     message: string;
 }
+export declare function initOsiValidator(schema: Record<string, unknown>): void;
 export declare function validateJsonSchema(data: unknown): ValidationError[];

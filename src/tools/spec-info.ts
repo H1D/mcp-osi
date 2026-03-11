@@ -1,15 +1,11 @@
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+let osiSchemaJson = "";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const osiSchemaJson = readFileSync(
-  join(__dirname, "../schema/osi-schema.json"),
-  "utf-8"
-);
+export function initOsiSpecInfo(schemaRaw: string) {
+  osiSchemaJson = schemaRaw;
+}
 
 const EXAMPLE_YAML = `# Minimal OSI example: a simple e-commerce model
-version: "1.0"
+version: "0.1.1"
 semantic_model:
   - name: ecommerce_model
     description: Simple e-commerce semantic model
@@ -71,7 +67,7 @@ semantic_model:
 const SPEC_SUMMARY = `# OSI (Open Semantic Interchange) Spec v1.0 — Quick Reference
 
 ## Top-level structure
-- \`version\` (required): Must be "1.0"
+- \`version\` (required): Must match the current spec version (check schema for exact value)
 - \`semantic_model\` (required): Array of SemanticModel objects
 - \`dialects\` (optional): Enum declaration — ANSI_SQL, SNOWFLAKE, MDX, TABLEAU, DATABRICKS
 - \`vendors\` (optional): Enum declaration — COMMON, SNOWFLAKE, SALESFORCE, DBT, DATABRICKS
@@ -120,27 +116,6 @@ const SPEC_SUMMARY = `# OSI (Open Semantic Interchange) Spec v1.0 — Quick Refe
 - custom_extensions.data must be a JSON string
 `;
 
-export const SPEC_INFO_TOOL = {
-  name: "get_osi_spec_reference",
-  description:
-    "Get the OSI specification reference, JSON Schema, or examples. " +
-    "Use this to understand the spec before generating or reviewing OSI schemas.",
-  inputSchema: {
-    type: "object" as const,
-    properties: {
-      section: {
-        type: "string",
-        enum: ["summary", "schema", "example"],
-        description:
-          "Which part to return: 'summary' for a quick reference of all types and rules, " +
-          "'schema' for the full JSON Schema, 'example' for an annotated example. Default: summary.",
-        default: "summary",
-      },
-    },
-    required: [],
-  },
-};
-
 export function handleSpecInfo(args: {
   section?: string;
 }): { content: Array<{ type: "text"; text: string }> } {
@@ -148,17 +123,11 @@ export function handleSpecInfo(args: {
 
   switch (section) {
     case "schema":
-      return {
-        content: [{ type: "text", text: osiSchemaJson }],
-      };
+      return { content: [{ type: "text", text: osiSchemaJson }] };
     case "example":
-      return {
-        content: [{ type: "text", text: EXAMPLE_YAML }],
-      };
+      return { content: [{ type: "text", text: EXAMPLE_YAML }] };
     case "summary":
     default:
-      return {
-        content: [{ type: "text", text: SPEC_SUMMARY }],
-      };
+      return { content: [{ type: "text", text: SPEC_SUMMARY }] };
   }
 }

@@ -3,17 +3,32 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import { loadSchemas } from "./schema-loader.js";
+import { initOsiValidator } from "./validators/json-schema.js";
 import { handleValidate } from "./tools/validate.js";
 import { handleScaffold } from "./tools/scaffold.js";
-import { handleSpecInfo } from "./tools/spec-info.js";
-import { handleDbtValidate } from "./tools/dbt-validate.js";
+import { initOsiSpecInfo, handleSpecInfo } from "./tools/spec-info.js";
+import { initDbtValidator, handleDbtValidate } from "./tools/dbt-validate.js";
 import { handleDbtScaffold } from "./tools/dbt-scaffold.js";
-import { handleDbtSpecInfo } from "./tools/dbt-spec-info.js";
+import { initDbtSpecInfo, handleDbtSpecInfo } from "./tools/dbt-spec-info.js";
+
+// Load schemas from GitHub (falls back to bundled if offline)
+const schemas = await loadSchemas();
+const schemaInfo = `OSI: ${schemas.osiSource}, dbt: ${schemas.dbtSource}`;
+console.error(`[mcp-osi] Schemas loaded (${schemaInfo})`);
+
+// Init validators with loaded schemas
+initOsiValidator(schemas.osi);
+initDbtValidator(schemas.dbt);
+initOsiSpecInfo(schemas.osiRaw);
+initDbtSpecInfo(schemas.dbtRaw);
 
 const server = new McpServer({
   name: "mcp-osi",
-  version: "0.2.0",
+  version: "0.3.0",
 });
+
+// --- OSI tools ---
 
 server.tool(
   "validate_osi_schema",
@@ -56,9 +71,7 @@ server.tool(
     section: z
       .enum(["summary", "schema", "example"])
       .default("summary")
-      .describe(
-        "'summary' for quick reference, 'schema' for full JSON Schema, 'example' for annotated example"
-      ),
+      .describe("'summary' for quick reference, 'schema' for full JSON Schema, 'example' for annotated example"),
   },
   async (args) => handleSpecInfo(args)
 );

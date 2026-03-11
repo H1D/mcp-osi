@@ -7,7 +7,7 @@
   "properties": {
     "version": {
       "type": "string",
-      "const": "1.0",
+      "const": "0.1.1",
       "description": "OSI specification version"
     },
     "dialects": {
@@ -60,12 +60,16 @@
             },
             "synonyms": {
               "type": "array",
-              "items": { "type": "string" },
+              "items": {
+                "type": "string"
+              },
               "description": "Alternative names and terms"
             },
             "examples": {
               "type": "array",
-              "items": { "type": "string" },
+              "items": {
+                "type": "string"
+              },
               "description": "Sample questions or use cases"
             }
           },
@@ -77,7 +81,9 @@
       "type": "object",
       "description": "Vendor-specific attributes for extensibility",
       "properties": {
-        "vendor_name": { "$ref": "#/$defs/Vendor" },
+        "vendor_name": {
+          "$ref": "#/$defs/Vendor"
+        },
         "data": {
           "type": "string",
           "description": "JSON string containing vendor-specific data"
@@ -90,7 +96,9 @@
       "type": "object",
       "description": "Expression in a specific dialect",
       "properties": {
-        "dialect": { "$ref": "#/$defs/Dialect" },
+        "dialect": {
+          "$ref": "#/$defs/Dialect"
+        },
         "expression": {
           "type": "string",
           "description": "SQL or dialect-specific expression"
@@ -105,7 +113,9 @@
       "properties": {
         "dialects": {
           "type": "array",
-          "items": { "$ref": "#/$defs/DialectExpression" },
+          "items": {
+            "$ref": "#/$defs/DialectExpression"
+          },
           "minItems": 1
         }
       },
@@ -131,8 +141,12 @@
           "type": "string",
           "description": "Unique identifier for the field within the dataset"
         },
-        "expression": { "$ref": "#/$defs/Expression" },
-        "dimension": { "$ref": "#/$defs/Dimension" },
+        "expression": {
+          "$ref": "#/$defs/Expression"
+        },
+        "dimension": {
+          "$ref": "#/$defs/Dimension"
+        },
         "label": {
           "type": "string",
           "description": "Label for categorization"
@@ -141,10 +155,14 @@
           "type": "string",
           "description": "Human-readable description"
         },
-        "ai_context": { "$ref": "#/$defs/AIContext" },
+        "ai_context": {
+          "$ref": "#/$defs/AIContext"
+        },
         "custom_extensions": {
           "type": "array",
-          "items": { "$ref": "#/$defs/CustomExtension" }
+          "items": {
+            "$ref": "#/$defs/CustomExtension"
+          }
         }
       },
       "required": ["name", "expression"],
@@ -164,14 +182,18 @@
         },
         "primary_key": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Primary key columns (single or composite)"
         },
         "unique_keys": {
           "type": "array",
           "items": {
             "type": "array",
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
           "description": "Array of unique key definitions (each can be single or composite)"
         },
@@ -179,14 +201,20 @@
           "type": "string",
           "description": "Human-readable description"
         },
-        "ai_context": { "$ref": "#/$defs/AIContext" },
+        "ai_context": {
+          "$ref": "#/$defs/AIContext"
+        },
         "fields": {
           "type": "array",
-          "items": { "$ref": "#/$defs/Field" }
+          "items": {
+            "$ref": "#/$defs/Field"
+          }
         },
         "custom_extensions": {
           "type": "array",
-          "items": { "$ref": "#/$defs/CustomExtension" }
+          "items": {
+            "$ref": "#/$defs/CustomExtension"
+          }
         }
       },
       "required": ["name", "source"],
@@ -210,20 +238,28 @@
         },
         "from_columns": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "minItems": 1,
           "description": "Foreign key columns in the 'from' dataset"
         },
         "to_columns": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "minItems": 1,
           "description": "Primary/unique key columns in the 'to' dataset"
         },
-        "ai_context": { "$ref": "#/$defs/AIContext" },
+        "ai_context": {
+          "$ref": "#/$defs/AIContext"
+        },
         "custom_extensions": {
           "type": "array",
-          "items": { "$ref": "#/$defs/CustomExtension" }
+          "items": {
+            "$ref": "#/$defs/CustomExtension"
+          }
         }
       },
       "required": ["name", "from", "to", "from_columns", "to_columns"],
@@ -237,15 +273,21 @@
           "type": "string",
           "description": "Unique identifier for the metric"
         },
-        "expression": { "$ref": "#/$defs/Expression" },
+        "expression": {
+          "$ref": "#/$defs/Expression"
+        },
         "description": {
           "type": "string",
           "description": "Human-readable description of what the metric measures"
         },
-        "ai_context": { "$ref": "#/$defs/AIContext" },
+        "ai_context": {
+          "$ref": "#/$defs/AIContext"
+        },
         "custom_extensions": {
           "type": "array",
-          "items": { "$ref": "#/$defs/CustomExtension" }
+          "items": {
+            "$ref": "#/$defs/CustomExtension"
+          }
         }
       },
       "required": ["name", "expression"],
@@ -263,26 +305,36 @@
           "type": "string",
           "description": "Human-readable description"
         },
-        "ai_context": { "$ref": "#/$defs/AIContext" },
+        "ai_context": {
+          "$ref": "#/$defs/AIContext"
+        },
         "datasets": {
           "type": "array",
-          "items": { "$ref": "#/$defs/Dataset" },
+          "items": {
+            "$ref": "#/$defs/Dataset"
+          },
           "minItems": 1,
           "description": "Collection of logical datasets"
         },
         "relationships": {
           "type": "array",
-          "items": { "$ref": "#/$defs/Relationship" },
+          "items": {
+            "$ref": "#/$defs/Relationship"
+          },
           "description": "Defines how datasets are connected"
         },
         "metrics": {
           "type": "array",
-          "items": { "$ref": "#/$defs/Metric" },
+          "items": {
+            "$ref": "#/$defs/Metric"
+          },
           "description": "Quantifiable measures spanning datasets"
         },
         "custom_extensions": {
           "type": "array",
-          "items": { "$ref": "#/$defs/CustomExtension" }
+          "items": {
+            "$ref": "#/$defs/CustomExtension"
+          }
         }
       },
       "required": ["name", "datasets"],

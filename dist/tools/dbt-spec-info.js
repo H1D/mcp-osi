@@ -1,8 +1,7 @@
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const dbtSchemaJson = readFileSync(join(__dirname, "../schema/dbt-yml-schema.json"), "utf-8");
+let dbtSchemaJson = "";
+export function initDbtSpecInfo(schemaRaw) {
+    dbtSchemaJson = schemaRaw;
+}
 const EXAMPLE_YAML = `# dbt semantic model example: e-commerce orders
 version: 2
 
